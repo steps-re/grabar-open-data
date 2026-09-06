@@ -83,8 +83,19 @@ archive's own dual-model vision transcription.
 **Neither side is ground truth.** This is agreement, not accuracy. It locates
 disagreement. It does not grade either system. Comparison is on Armenian letters
 only, NFC-normalized with `և` folded to `եւ`, so punctuation and reading-order
-conventions do not pollute the figure. 66 pages were dropped for having under 40
-characters on our side.
+conventions do not pollute the figure.
+
+66 pages were dropped for carrying under 40 Armenian letters on our side. Only 14
+of those are blank or plate pages. **The other 52 are French**: the 1825 Selected
+Fables of Vardan is an Armenian-French bilingual edition (Paris, Dondey-Dupre),
+and the last leaves are a Journal Asiatique bookseller's catalogue in French and
+Latin. An Armenian recognizer on a French page produces Armenian-shaped noise, so
+those pages measure nothing and are excluded.
+
+The `page_script` column marks each page `armenian`, `latin` or `blank`, so this
+is filterable. 5 Latin pages did slip into the scored set. Dropping them moves the
+1825 row from 0.362 to 0.379 over 45 pages, which is why the table below is
+unchanged: the effect is small, and it runs against the recognizer, not for it.
 
 Median CER by book:
 
@@ -92,7 +103,7 @@ Median CER by book:
 |---|---|---|---|---|
 | The Fox Book | 1668 | 300 | 0.066 | 0.98 |
 | Songbook (Yergaran) | 1737 | 219 | 0.208 | 1.09 |
-| Selected Fables of Vardan | 1825 | 50 | 0.362 | 0.68 |
+| Selected Fables of Vardan | 1825 | 45 | 0.379 | 0.67 |
 | A Training in Manners | 1829 | 142 | 0.076 | 0.98 |
 | Book of Hours (Žamagirkʿ) | 1848 | 733 | 0.050 | 1.00 |
 | Almanac for 1853 | 1852 | 91 | 0.855 | 0.16 |
