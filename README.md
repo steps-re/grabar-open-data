@@ -1,12 +1,14 @@
 # Grabar Archive open data
 
-Two datasets from [tsavdtanem.org](https://tsavdtanem.org), a reader over machine
+Three datasets from [tsavdtanem.org](https://tsavdtanem.org), a reader over machine
 working drafts of public-domain Armenian print.
 
 1. **Bedrossian 1875-79**, 34,557 headwords, each tied to the scan page it came
    from and a URL that opens that page.
 2. **An OCR agreement benchmark** over 2,053 pages of eleven Armenian imprints,
    1668-1905, against Calfa's open `hye-open-ocr` recognizer.
+3. **A Classical Armenian to French parallel corpus**, the 45 fables of Vardan
+   in the 1825 Paris facing-page edition, aligned fable by fable.
 
 Both are offered for correction and reuse. If something here is wrong, open an
 issue. Every row carries the page image that settles it.
@@ -16,7 +18,7 @@ these are machine drafts, and the page image is the authority.
 
 ---
 
-Three files, under `data/`. Method and known limits below.
+Four files, under `data/`. Method and known limits below.
 
 ## 1. `bedrossian_page_anchors.tsv` (34,557 entries)
 
@@ -129,6 +131,43 @@ Alignment is page-level, not line-level. As it stands this is an evaluation set,
 not training data.
 
 ---
+
+## 4. `vardan_1825_fables_hy_fr.tsv` (45 fable pairs)
+
+A Classical Armenian to French parallel corpus: the 45 fables of *Hatentir
+arakk Vardanay vardapeti* (Selected Fables of Vardan), Paris, Dondey-Dupre,
+1825, aligned fable by fable. 25,092 Armenian characters against 36,505 French.
+Each row carries both titles, both texts, the leaves each side came from, and a
+URL for each page image.
+
+The book is a facing-page edition: Vardan's Armenian on the left half of every
+scanned opening, the French on the right. Nothing in the digitization recorded
+that the halves translate each other, so this file is that link.
+
+**How it was aligned, and how you can check it.** Not on the Armenian numerals.
+Those are OCR-damaged, and several parse to a confidently wrong number, which
+would mispair fables while looking correct: leaf 013L reads `Բ` (2) but is fable
+9, 022L reads `Ժ.Օ` (10) but is 16, 027L reads `ԽԱ` (41) but is 21. The French
+roman numerals are clean, 44 of 45, so the spine is the French numeral plus
+document order.
+
+Three independent checks:
+
+1. The Armenian and French fable headings number **45 and 45**, and the French
+   numeral equals the sequence position in all 45.
+2. The book's own bilingual table of contents is a separate witness. 40 of its
+   45 entries parse, its Armenian numeral agrees with its Roman in **40 of 40**,
+   and the body titles match the table for 38 of 40 French and 36 of 40
+   Armenian. Every residual is spelling variance for the same fable (`ԵՒ` against
+   the `և` ligature, `BOEUF` against `Bœuf`, letter-spaced OCR), not a mispairing.
+3. The French to Armenian length ratio stays between **1.15 and 2.02** across all
+   45, median 1.42. A mispaired fable would tend to fall outside that.
+
+Known limits: the Armenian is a machine transcription of a printed page and the
+French is the 1825 translator's, not a modern one. Titles are kept exactly as
+printed, which means all caps and the occasional OCR slip. Alignment is at the
+fable, not the sentence.
+
 
 ## Provenance and limits
 
